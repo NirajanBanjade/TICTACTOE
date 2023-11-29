@@ -47,6 +47,7 @@ int GameState:: addMove(Move move){
 }
 bool GameState:: undoLast(){
     if(moveStack.isEmpty()){
+        cout<<"No moves to undo!"<<endl;
         return false;
     }
     boardState[moveStack.top().x][moveStack.top().y]='_';

@@ -2,7 +2,7 @@
 #include <iostream>
 
 using namespace std;
-
+// This is just for testing the movestack.cpp not the main program
 int main(){
 
     Movestack tik;

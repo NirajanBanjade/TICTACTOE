@@ -3,60 +3,75 @@
 
 using namespace std;
 
-int main(){
+/*
+Movestack& n1: trying to access the moveStack a private member variable so that all the functions in moveStack class can be accessed
+the while loop will go on until the checkLastPLayerWIn gives a true boolean value;
+
+*/
+
+int main()
+{
 
     GameState gameState;
-    Movestack& n1=gameState.getmoveStack();
+    Movestack &n1 = gameState.getmoveStack();
     Move finalMove;
 
-    char undo;
-    while(!gameState.checkLastPlayerWin()){
-        
-        if(n1.getSize()==9){
-            cout<<"The game is draw!!!!";
+    string moves;
+    while (!gameState.checkLastPlayerWin())
+    {
+
+        if (n1.getSize() == 9)
+        {
+            cout << "The game is draw!!!!";
             return 0;
         }
 
         gameState.displayBoardState(cout);
-        cout<<"Player "<<gameState.getCurrentPlayer()<<" make a turn!!"<<endl;
+        cout << "Player " << gameState.getCurrentPlayer() << " make a turn!!" << endl;
 
-        cin>>finalMove.x>>finalMove.y;
+        cin >> moves;
 
-        
-        
-        if (gameState.addMove(finalMove)==1){   
-            if(gameState.checkLastPlayerWin()==true){
-                gameState.displayBoardState(cout);
-                cout<<"Player "<<gameState.getCurrentPlayer()<<" won the game !!!!!"<<endl;
-                
-    
-                exit(1); 
-            }else{        
-                n1.push(finalMove);
+        if (moves == "Undo" || moves == "undo")
+        {
+            if (n1.isEmpty())
+            {
+                cout << "No moves to undo!" << endl;
             }
-            
+            else
+            {
+                gameState.undoLast();
+            }
         }
-        else if(gameState.addMove(finalMove)==-1){
-            cout<<"Invalid move!!!"<<endl;
-            continue;
+        else if (moves == "quit")
+        {
+            return 0;
         }
+        else if (moves == "move")
+        {
 
-        
-        gameState.displayBoardState(cout);
+            cin >> finalMove.x >> finalMove.y;
 
-        cout<<"Want to undo? "<<endl;
-        cin>>undo;
-        if((undo =='y')||(undo=='Y')){
-            gameState.undoLast();
-          
-            // gameState.displayBoardState(cout);
+            if (gameState.addMove(finalMove) == 1)
+            {
+                if (gameState.checkLastPlayerWin() == true)
+                {
+                    gameState.displayBoardState(cout);
+                    cout << "Player " << gameState.getCurrentPlayer() << " won !" << endl;
+
+                    exit(1);
+                }
+                else
+                {
+                    n1.push(finalMove);
+                }
+            }
+            else if (gameState.addMove(finalMove) == -1)
+            {
+                cout << "Incorrect move. Please try again." << endl;
+                continue;
+            }
         }
-
     }
-    
-
 
     return 0;
 }
-
-
